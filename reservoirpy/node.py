@@ -119,6 +119,7 @@ References
 # Copyright: Xavier Hinaut (2018) <xavier.hinaut@inria.fr>
 from contextlib import contextmanager
 from copy import copy, deepcopy
+from os import getpid
 from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
@@ -615,7 +616,7 @@ class Node(_Node):
             Data to store in the buffer array.
         """
         if as_memmap:
-            self._buffers[name] = memmap_buffer(self, data=data, shape=shape, name=name)
+            self._buffers[name] = memmap_buffer(self, data=data, shape=shape, name=f"{name}-{getpid()}")
         else:
             if data is not None:
                 self._buffers[name] = data
